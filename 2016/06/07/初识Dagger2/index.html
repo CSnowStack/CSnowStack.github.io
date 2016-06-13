@@ -11,7 +11,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/07/初识Dagger2/index.html">
 <meta property="og:site_name" content="Go with the flow">
 <meta property="og:description">
-<meta property="og:updated_time" content="2016-06-08T06:30:31.965Z">
+<meta property="og:updated_time" content="2016-06-13T09:38:43.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识Dagger2">
 <meta name="twitter:description">
@@ -123,7 +123,7 @@
 </li>
 <li><p>让单元测试和集成测试更加方便</p>
 <blockquote>
-<p>因为引来关系已经被独立出来,所以我们可以轻松的抽取出不同的模块进行测试,依赖的注入和配置独立于组件之外,因为对象是在一个独立、不耦合的地方初始化,所以当注入抽象方法的时候,只需要修改对象的实现方法.依赖可以注入到一个组件中:我们可以注入这些依赖的模拟实现,使得测试更加简单</p>
+<p>因为依赖关系已经被独立出来,所以我们可以轻松的抽取出不同的模块进行测试,依赖的注入和配置独立于组件之外,因为对象是在一个独立、不耦合的地方初始化,所以当注入抽象方法的时候,只需要修改对象的实现方法.依赖可以注入到一个组件中:我们可以注入这些依赖的模拟实现,使得测试更加简单</p>
 </blockquote>
 </li>
 <li><p>作用域实例(Scoped instances)</p>
@@ -172,14 +172,14 @@
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> ActivityComponent activityComponent;</span><br><span class="line"><span class="meta">@Inject</span> Person person;</span><br><span class="line">activityComponent=DaggerActivityComponent.builder().activityModule(<span class="keyword">new</span> ActivityModule()).build();</span><br><span class="line">activityComponent.inject(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>Dagger 通过 <code>@inject</code> 注解提供了获取实例引用的方法,通过调用<code>@inject</code>会让Dagger在 <strong>依赖关系(依赖表 Dependency graph)</strong> 中找到对应的引用并赋值给该字段.<code>activityComponent.inject(this)</code>把当前<code>Activity</code>对象注入到<code>activityComponent</code>里面,</p>
+<p>Dagger 通过 <code>@inject</code> 注解提供了获取实例引用的方法,通过调用<code>@inject</code>会让Dagger在 <strong>依赖关系(依赖表 Dependency graph)</strong> 中找到对应的引用并赋值给该字段.<code>activityComponent.inject(this)</code>把当前<code>activityComponent</code>里的对象注入到<code>Activity</code>里面,</p>
 </blockquote>
-<h2 id="还有好多东西可以点击链接深入了解"><a href="#还有好多东西可以点击链接深入了解" class="headerlink" title="还有好多东西可以点击链接深入了解"></a>还有好多东西可以点击链接深入了解</h2><p><a href="http://www.jianshu.com/p/2b6899f7b646" target="_blank" rel="external">来源</a><br><a href="http://www.jianshu.com/p/01d3c014b0b1?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">来源</a><br><a href="http://frogermcs.github.io/archive/" target="_blank" rel="external">资料</a><br><a href="http://www.cnblogs.com/tiantianbyconan/archive/2016/01/02/5095426.html" target="_blank" rel="external">资料</a></p>
+<h2 id="还有好多东西可以点击链接深入了解"><a href="#还有好多东西可以点击链接深入了解" class="headerlink" title="还有好多东西可以点击链接深入了解"></a>还有好多东西可以点击链接深入了解</h2><p><a href="http://www.jianshu.com/p/2b6899f7b646" target="_blank" rel="external">来源</a><br><a href="http://www.jianshu.com/p/01d3c014b0b1?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">来源</a><br><a href="http://www.cnblogs.com/tiantianbyconan/p/5092525.html" target="_blank" rel="external">资料</a><br><a href="http://frogermcs.github.io/archive/" target="_blank" rel="external">资料</a><br><a href="http://www.cnblogs.com/tiantianbyconan/archive/2016/01/02/5095426.html" target="_blank" rel="external">资料</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/初识Dagger2/" data-id="cip6hyzde0000cg6yzjssle27" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/06/07/初识Dagger2/" data-id="cipdvbx370002r06yghinszwd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dagger2/">Dagger2</a></li></ul>
@@ -188,6 +188,20 @@
   </div>
   
     
+<nav id="article-nav">
+  
+    <a href="/2016/06/12/Dagger2之Scope/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Dagger2之Scope
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
@@ -232,6 +246,10 @@
     <h3 class="widget-title">最新文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/06/12/Dagger2之Scope/">Dagger2之Scope</a>
+          </li>
         
           <li>
             <a href="/2016/06/07/初识Dagger2/">初识Dagger2</a>

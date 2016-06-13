@@ -3,17 +3,66 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Go with the flow</title>
+  <title>Dagger2之Scope | Go with the flow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CSnowStack的个人博客">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Go with the flow">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Scope(作用域)1.1 科普一波
+目标类
+
+目标类是依赖那些需要初始化的类的类
+
+
+目标类初始化自己依赖的其他类(仅Inject处理)
+
+用Inject注解标注目标类中其他类
+用Inject注解标注其他类的构造函数
+若其他类还依赖于其他的类,则重复进行上面两个步骤
+调用Component的injectXXX(Object)方法开始注入
+
+
+
+
+Module用于处理使用第三库时替代Inject的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dagger2之Scope">
+<meta property="og:url" content="http://yoursite.com/2016/06/12/Dagger2之Scope/index.html">
 <meta property="og:site_name" content="Go with the flow">
-<meta property="og:description" content="CSnowStack的个人博客">
+<meta property="og:description" content="Scope(作用域)1.1 科普一波
+目标类
+
+目标类是依赖那些需要初始化的类的类
+
+
+目标类初始化自己依赖的其他类(仅Inject处理)
+
+用Inject注解标注目标类中其他类
+用Inject注解标注其他类的构造函数
+若其他类还依赖于其他的类,则重复进行上面两个步骤
+调用Component的injectXXX(Object)方法开始注入
+
+
+
+
+Module用于处理使用第三库时替代Inject的">
+<meta property="og:updated_time" content="2016-06-13T10:17:50.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Go with the flow">
-<meta name="twitter:description" content="CSnowStack的个人博客">
+<meta name="twitter:title" content="Dagger2之Scope">
+<meta name="twitter:description" content="Scope(作用域)1.1 科普一波
+目标类
+
+目标类是依赖那些需要初始化的类的类
+
+
+目标类初始化自己依赖的其他类(仅Inject处理)
+
+用Inject注解标注目标类中其他类
+用Inject注解标注其他类的构造函数
+若其他类还依赖于其他的类,则重复进行上面两个步骤
+调用Component的injectXXX(Object)方法开始注入
+
+
+
+
+Module用于处理使用第三库时替代Inject的">
   
     <link rel="alternate" href="/atom.xml" title="Go with the flow" type="application/atom+xml">
   
@@ -66,9 +115,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Dagger2之Scope" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Dagger2之Scope" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/06/12/Dagger2之Scope/" class="article-date">
   <time datetime="2016-06-12T14:02:56.000Z" itemprop="datePublished">2016-06-12</time>
@@ -81,8 +128,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/12/Dagger2之Scope/">Dagger2之Scope</a>
+    <h1 class="article-title" itemprop="name">
+      Dagger2之Scope
     </h1>
   
 
@@ -176,55 +223,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-初识Dagger2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/06/07/初识Dagger2/" class="article-date">
-  <time datetime="2016-06-07T15:07:53.000Z" itemprop="datePublished">2016-06-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/07/初识Dagger2/">初识Dagger2</a>
-    </h1>
+    <a href="/2016/06/07/初识Dagger2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">初识Dagger2</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><Excerpt in index | 首页摘要></p>
-<ul>
-<li>
-        
-          <p class="article-more-link">
-            <a href="/2016/06/07/初识Dagger2/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/07/初识Dagger2/" data-id="cipdvbx370002r06yghinszwd" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dagger2/">Dagger2</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
