@@ -5,64 +5,16 @@
   
   <title>Dagger2之Scope | Go with the flow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Scope(作用域)1.1 科普一波
-目标类
-
-目标类是依赖那些需要初始化的类的类
-
-
-目标类初始化自己依赖的其他类(仅Inject处理)
-
-用Inject注解标注目标类中其他类
-用Inject注解标注其他类的构造函数
-若其他类还依赖于其他的类,则重复进行上面两个步骤
-调用Component的injectXXX(Object)方法开始注入
-
-
-
-
-Module用于处理使用第三库时替代Inject的">
+  <meta name="description">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dagger2之Scope">
-<meta property="og:url" content="http://yoursite.com/2016/06/12/Dagger2之Scope/index.html">
+<meta property="og:url" content="csnowstack.github.io/2016/06/12/Dagger2之Scope/index.html">
 <meta property="og:site_name" content="Go with the flow">
-<meta property="og:description" content="Scope(作用域)1.1 科普一波
-目标类
-
-目标类是依赖那些需要初始化的类的类
-
-
-目标类初始化自己依赖的其他类(仅Inject处理)
-
-用Inject注解标注目标类中其他类
-用Inject注解标注其他类的构造函数
-若其他类还依赖于其他的类,则重复进行上面两个步骤
-调用Component的injectXXX(Object)方法开始注入
-
-
-
-
-Module用于处理使用第三库时替代Inject的">
-<meta property="og:updated_time" content="2016-06-13T10:17:50.759Z">
+<meta property="og:description">
+<meta property="og:updated_time" content="2016-06-14T05:54:01.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dagger2之Scope">
-<meta name="twitter:description" content="Scope(作用域)1.1 科普一波
-目标类
-
-目标类是依赖那些需要初始化的类的类
-
-
-目标类初始化自己依赖的其他类(仅Inject处理)
-
-用Inject注解标注目标类中其他类
-用Inject注解标注其他类的构造函数
-若其他类还依赖于其他的类,则重复进行上面两个步骤
-调用Component的injectXXX(Object)方法开始注入
-
-
-
-
-Module用于处理使用第三库时替代Inject的">
+<meta name="twitter:description">
   
     <link rel="alternate" href="/atom.xml" title="Go with the flow" type="application/atom+xml">
   
@@ -109,7 +61,7 @@ Module用于处理使用第三库时替代Inject的">
         <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="csnowstack.github.io"></form>
       </div>
     </div>
   </div>
@@ -137,7 +89,12 @@ Module用于处理使用第三库时替代Inject的">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Scope-作用域"><a href="#Scope-作用域" class="headerlink" title="Scope(作用域)"></a>Scope(作用域)</h1><h2 id="1-1-科普一波"><a href="#1-1-科普一波" class="headerlink" title="1.1 科普一波"></a>1.1 科普一波</h2><ul>
+        <p><excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<ul>
+<li><a id="more"></a>
+</li>
+</ul>
+<h1 id="Scope-作用域"><a href="#Scope-作用域" class="headerlink" title="Scope(作用域)"></a>Scope(作用域)</h1><h2 id="1-1-科普一波"><a href="#1-1-科普一波" class="headerlink" title="1.1 科普一波"></a>1.1 科普一波</h2><ul>
 <li><p>目标类</p>
 <blockquote>
 <p>目标类是依赖那些需要初始化的类的类</p>
@@ -209,13 +166,14 @@ Module用于处理使用第三库时替代Inject的">
 <h3 id="AppComponent"><a href="#AppComponent" class="headerlink" title="AppComponent"></a>AppComponent</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Component</span>(modules = AppModule.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ApiComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Inject</span><span class="params">(MyApplication mApplication)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">MyApplication <span class="title">app</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">"MainApiService"</span>)</span><br><span class="line">    <span class="function">ApiService <span class="title">apiService</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">OtherApiComponent <span class="title">plus</span><span class="params">(OtherApiModule otherApiModule)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="OtherApiModule"><a href="#OtherApiModule" class="headerlink" title="OtherApiModule"></a>OtherApiModule</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherApiModule</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String baseUrl;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OtherApiModule</span><span class="params">(String baseUrl)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.baseUrl=baseUrl;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@OtherApiScope</span></span><br><span class="line">    <span class="function">String <span class="title">providerBaseUrl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> baseUrl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@OtherApiScope</span></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">"OtherApiService"</span>)</span><br><span class="line">    <span class="function">ApiService <span class="title">providerOtherApiService</span><span class="params">(OkHttpClient okHttpClient,String baseUrl)</span> </span>&#123;</span><br><span class="line">        Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder().baseUrl(baseUrl)</span><br><span class="line">                .client(okHttpClient)</span><br><span class="line">                .addConverterFactory(StringConverterFactory.create())</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        <span class="keyword">return</span> retrofit.create(ApiService.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="OtherApiComponent"><a href="#OtherApiComponent" class="headerlink" title="OtherApiComponent"></a>OtherApiComponent</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@OtherApiScope</span></span><br><span class="line"><span class="meta">@Subcomponent</span>(modules= OtherApiModule.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">OtherApiComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">inject</span><span class="params">(OhterActivity otherActivity)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">"OtherApiService"</span>)</span><br><span class="line">    <span class="function">ApiService <span class="title">providerOtherApiService</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="OtherActivity"><a href="#OtherActivity" class="headerlink" title="OtherActivity"></a>OtherActivity</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherActivity</span> <span class="keyword">extends</span> <span class="title">BaseActivity</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Inject</span></span><br><span class="line">  <span class="meta">@Named</span>(<span class="string">"OtherApiService"</span>)</span><br><span class="line">  ApiService otherService;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">       setContentView(R.layout.activity_other);</span><br><span class="line">       application.getApiComponent().plus(<span class="keyword">new</span> OtherApiModule(ohterUrl)).inject(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="OtherActivity"><a href="#OtherActivity" class="headerlink" title="OtherActivity"></a>OtherActivity</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherActivity</span> <span class="keyword">extends</span> <span class="title">BaseActivity</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Inject</span></span><br><span class="line">  <span class="meta">@Named</span>(<span class="string">"OtherApiService"</span>)</span><br><span class="line">  ApiService otherService;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">       setContentView(R.layout.activity_other);</span><br><span class="line">       <span class="keyword">if</span>(<span class="keyword">null</span>==application.getOtherApiComponent)&#123;</span><br><span class="line">         application.createOtherApiComponent(<span class="string">"baseurl"</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       application.getOtherApiComponent.inject(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="MyApplication"><a href="#MyApplication" class="headerlink" title="MyApplication"></a>MyApplication</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate();</span><br><span class="line">    application = <span class="keyword">this</span>;</span><br><span class="line">    apiComponent = DaggerApiComponent.builder().apiModule(<span class="keyword">new</span> ApiModule(<span class="keyword">this</span>)).build();</span><br><span class="line">    apiComponent.Inject(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> ApiComponent <span class="title">getApiComponent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> apiComponent;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">createOtherApiComponent</span><span class="params">(String baseURL)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.mOtherApiComponent = apiComponent.plus(<span class="keyword">new</span> OtherApiModule(baseURL));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> OtherApiComponent <span class="title">getOtherApiComponent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mOtherApiComponent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><a href="http://www.jianshu.com/p/1d42d2e6f4a5" target="_blank" rel="external">来源</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/06/12/Dagger2之Scope/" data-id="cipdvbx2x0000r06yeinkth6l" class="article-share-link">Share</a>
+      <a data-url="csnowstack.github.io/2016/06/12/Dagger2之Scope/" data-id="cipf1q0w000025s6yj0nq2tje" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dagger2/">Dagger2</a></li></ul>
