@@ -1,0 +1,471 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu_union_verify" content="d1952c66cf48912e21c18c7c581f382a">
+  <meta name="360-site-verification" content="67fbcc5a67f4c65c057315b28fa0b2c8" />
+<meta name="google-site-verification" content="2GzxQ0VtXwTSUdmGm6DzcmhTzM_I9QmzCb_pzpMzD88" />
+  
+    <title>Rxjava之线程的切换 | Go with the flow</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Qian Cheng">
+    
+    <meta name="description" content="">
+    
+    
+    
+    
+    <link rel="alternate" href="atom.xml" title="Go with the flow" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            var _bdId ='391982416296a0d54221f59fe35250d4';
+             hm.src = "//hm.baidu.com/hm.js?" + _bdId;
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+     
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Go with the flow">Go with the flow</a></h1>
+				<a class="blog-motto">CSnowStack</a>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+					
+                                            <form class="search" action=http://zhannei.baidu.com/cse/search target="_blank">
+                                            <label>Search</label>
+                                        <input name="s" type="hidden" value= null ><input type="text" name="q" size="30" placeholder="搜索"><br>
+					
+					</li>
+				</ul>
+                            </nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/07/03/Rxjava之线程的切换/" title="Rxjava之线程的切换" itemprop="url">Rxjava之线程的切换</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="csnowstack.github.io" title="Qian Cheng">Qian Cheng</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-07-03T02:32:33.000Z" itemprop="datePublished">2016-07-03</time>
+    更新日期:<time datetime="2016-07-04T15:01:43.123Z" itemprop="dateModified">2016-07-04</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<p><excerpt in="" index="" |="" 首页摘要=""><br><a id="more"></a></excerpt></p>
+<h2 id="文档解释"><a href="#文档解释" class="headerlink" title="文档解释"></a>文档解释</h2><ul>
+<li><code>subscribeOn</code> : 指示Observable在一个特定的调度器上运转.它同样会在那个调度器上给观察者发通知。</li>
+<li><code>ObserveOn</code> : 指示Observable在一个指定的调度器上给观察者发通知.</li>
+</ul>
+<blockquote>
+<p>不是很明白?那就看例子,一个个写出来</p>
+</blockquote>
+<h2 id="还是要从使用看起"><a href="#还是要从使用看起" class="headerlink" title="还是要从使用看起"></a>还是要从使用看起</h2><h3 id="最简单的一个小例子"><a href="#最简单的一个小例子" class="headerlink" title="最简单的一个小例子"></a>最简单的一个小例子</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        getObservable()</span><br><span class="line">        .subscribe(getSubscriber());</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> Observable&lt;String&gt; <span class="title">getObservable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">return</span> Observable.create(<span class="keyword">new</span> Observable.OnSubscribe&lt;String&gt;() &#123;</span><br><span class="line">             <span class="meta">@Override</span></span><br><span class="line">             <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Subscriber&lt;? <span class="keyword">super</span> String&gt; subscriber)</span> </span>&#123;</span><br><span class="line">                 Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"create -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                 subscriber.onNext(<span class="string">"CSnowStack"</span>);</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;);</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">private</span> Subscriber&lt;String&gt; <span class="title">getSubscriber</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> Subscriber&lt;String&gt;() &#123;</span><br><span class="line">             <span class="meta">@Override</span></span><br><span class="line">             <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCompleted</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                 Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"onCompleted"</span>);</span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line">             <span class="meta">@Override</span></span><br><span class="line">             <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable e)</span> </span>&#123;</span><br><span class="line">                 Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"onError "</span> + Thread.currentThread().getName());</span><br><span class="line">             &#125;</span><br><span class="line"></span><br><span class="line">             <span class="meta">@Override</span></span><br><span class="line">             <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">                 Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"onNext  "</span> + Thread.currentThread().getName());</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>E/–&gt;&gt;: create – main<br>E/–&gt;&gt;: onNext – main</p>
+</blockquote>
+<h3 id="在一个线程里面的话"><a href="#在一个线程里面的话" class="headerlink" title="在一个线程里面的话"></a>在一个线程里面的话</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">             getObservable()</span><br><span class="line">             .subscribe(getSubscriber());</span><br><span class="line">           &#125;</span><br><span class="line">         &#125;).start();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>E/–&gt;&gt;: create – Thread-5297<br>E/–&gt;&gt;: onNext – Thread-5297</p>
+<p>可以看到 如果没有任何操作符处理的话,默认是执行在当前线程的</p>
+</blockquote>
+<h3 id="subscribeOn"><a href="#subscribeOn" class="headerlink" title="subscribeOn"></a>subscribeOn</h3><p>在主线程里指定在新线程里执行<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getObservable()</span><br><span class="line">.subscribeOn(Schedulers.newThread())</span><br><span class="line">.subscribe(getSubscriber());</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>E/–&gt;&gt;: create – RxNewThreadScheduler-1<br>E/–&gt;&gt;: onNext – RxNewThreadScheduler-1</p>
+</blockquote>
+<p>在线程里面用<code>subscribeOn</code>指定主线程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            getObservable()</span><br><span class="line">            .subscribeOn(AndroidSchedulers.mainThread())</span><br><span class="line">            .subscribe(getSubscriber());  </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;).start();</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>E/–&gt;&gt;: create – main<br>E/–&gt;&gt;: onNext – main</p>
+<p>只有<code>subscribeOn</code>操作符的情况下.发射数据与接收数据都是在<code>subscribeOn</code>指定的线程里.与文档介绍的一致</p>
+</blockquote>
+<h3 id="ObserveOn"><a href="#ObserveOn" class="headerlink" title="ObserveOn"></a>ObserveOn</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">getObservable()</span><br><span class="line">.map(s -&gt; &#123;</span><br><span class="line">  Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">  <span class="keyword">return</span> s;</span><br><span class="line">&#125;)</span><br><span class="line">.observeOn(Schedulers.newThread())</span><br><span class="line">.map(s -&gt; &#123;</span><br><span class="line">  Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">  <span class="keyword">return</span> s;</span><br><span class="line">&#125;)</span><br><span class="line">.subscribe(getSubscriber());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>E/–&gt;&gt;: create – main<br>E/–&gt;&gt;: map no change – main<br>E/–&gt;&gt;: map no change – RxNewThreadScheduler-1<br>E/–&gt;&gt;: onNext  RxNewThreadScheduler-1</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">           <span class="meta">@Override</span></span><br><span class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">               getObservable()</span><br><span class="line">               .map(s -&gt; &#123;</span><br><span class="line">                 Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                 <span class="keyword">return</span> s;</span><br><span class="line">               &#125;)</span><br><span class="line">               .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">               .map(s -&gt; &#123;</span><br><span class="line">                 Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                 <span class="keyword">return</span> s;</span><br><span class="line">               &#125;)</span><br><span class="line">               .subscribe(getSubscriber());</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;).start();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>E/–&gt;&gt;: create – Thread-5576<br>E/–&gt;&gt;: map no change – Thread-5576<br>E/–&gt;&gt;: map no change – main<br>E/–&gt;&gt;: onNext  main</p>
+<p>可以看到<code>ObserveOn</code>影响的是下面的操作</p>
+</blockquote>
+<h3 id="SubscribeOn-与-OnserveOn"><a href="#SubscribeOn-与-OnserveOn" class="headerlink" title="SubscribeOn 与 OnserveOn"></a>SubscribeOn 与 OnserveOn</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">getObservable()</span><br><span class="line">               .map(s -&gt; &#123;</span><br><span class="line">                   Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                   <span class="keyword">return</span> s;</span><br><span class="line">               &#125;)</span><br><span class="line">               .subscribeOn(Schedulers.newThread())</span><br><span class="line">               .map(s -&gt; &#123;</span><br><span class="line">                   Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                   <span class="keyword">return</span> s;</span><br><span class="line">               &#125;)</span><br><span class="line">               .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">               .map(s -&gt; &#123;</span><br><span class="line">                   Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                   <span class="keyword">return</span> s;</span><br><span class="line">               &#125;)</span><br><span class="line">               .subscribe(getSubscriber());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>create – RxNewThreadScheduler-1<br>E/–&gt;&gt;: map no change – RxNewThreadScheduler-1<br>E/–&gt;&gt;: map no change – RxNewThreadScheduler-1<br>E/–&gt;&gt;: map no change – main<br>E/–&gt;&gt;: onNext  main</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">getObservable()</span><br><span class="line">                .map(s -&gt; &#123;</span><br><span class="line">                    Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                    <span class="keyword">return</span> s;</span><br><span class="line">                &#125;)</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line"></span><br><span class="line">                .map(s -&gt; &#123;</span><br><span class="line">                    Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                    <span class="keyword">return</span> s;</span><br><span class="line">                &#125;)</span><br><span class="line">                .subscribeOn(Schedulers.newThread())</span><br><span class="line">                .map(s -&gt; &#123;</span><br><span class="line">                    Log.e(<span class="string">"--&gt;&gt;"</span>, <span class="string">"map no change -- "</span> + Thread.currentThread().getName());</span><br><span class="line">                    <span class="keyword">return</span> s;</span><br><span class="line">                &#125;)</span><br><span class="line">                .subscribe(getSubscriber());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>create – RxNewThreadScheduler-1<br>E/–&gt;&gt;: map no change – RxNewThreadScheduler-1<br>E/–&gt;&gt;: map no change – main<br>E/–&gt;&gt;: map no change – main<br>E/–&gt;&gt;: onNext  main</p>
+<p>当<code>SubscribeOn</code>操作符在<code>ObserveOn</code>的上面.<code>ObserveOn</code>操作符下面的操作所在的线程由<code>ObserveOn</code>处理,当<code>SubscribeOn</code>操作符在<code>ObserveOn</code>的下面.<code>ObserveOn</code>操作符下面的操作所在的线程由<code>ObserveOn</code>处理.</p>
+</blockquote>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">getObservable()</span><br><span class="line">.subscribeOn(Schedulers.io())</span><br><span class="line">.map(<span class="comment">/**/)</span><br><span class="line">.map(/**/</span>)</span><br><span class="line">.observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">.subscribe(getSubscriber());</span><br><span class="line"></span><br><span class="line">getObservable()</span><br><span class="line">.map(<span class="comment">/**/)</span><br><span class="line">.map(/**/</span>)</span><br><span class="line">.subscribeOn(Schedulers.io())</span><br><span class="line">.observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">.subscribe(getSubscriber());</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面两种写法的结果是一样的</p>
+</blockquote>
+<h3 id="简写"><a href="#简写" class="headerlink" title="简写"></a>简写</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RxSchedulersHelper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; Observable.<span class="function">Transformer&lt;T, T&gt; <span class="title">io_main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Observable.Transformer&lt;T, T&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Observable&lt;T&gt; <span class="title">call</span><span class="params">(Observable&lt;T&gt; tObservable)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> tObservable</span><br><span class="line">                        .subscribeOn(Schedulers.io())</span><br><span class="line">                        .observeOn(AndroidSchedulers.mainThread());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getObservable()</span><br><span class="line">.map(<span class="comment">/**/)</span><br><span class="line">.map(/**/</span>)</span><br><span class="line">.compose(RxSchedulersHelper.io_main())</span><br><span class="line">.subscribe(getSubscriber());</span><br></pre></td></tr></table></figure>
+<p>参考<br><a href="https://mcxiaoke.gitbooks.io/rxdocs/content/" target="_blank" rel="external">Rxjava 中文文档</a><br><a href="http://www.jianshu.com/p/f3f0eccbcd6f" target="_blank" rel="external">youkey Rxjava 简洁封装之道</a><br><a href="http://www.jianshu.com/p/e9e03194199e" target="_blank" rel="external">小鄧子 避免打断链式结构：使用.compose( )操作符</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Rxjava/">Rxjava</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="csnowstack.github.io/2016/07/03/Rxjava之线程的切换/" data-title="Rxjava之线程的切换 | Go with the flow" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/06/30/Rxjava操作符之由map到lift/"  title="Rxjava操作符之由map到lift">
+ <strong>NEXT:</strong><br/> 
+ <span>Rxjava操作符之由map到lift
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Rxjava之线程的切换" data-thread-key="Rxjava之线程的切换" data-author-key="Qian Cheng" data-url="csnowstack.github.io/post/Rxjava之线程的切换"></div>
+	
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文档解释"><span class="toc-number">1.</span> <span class="toc-text">文档解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#还是要从使用看起"><span class="toc-number">2.</span> <span class="toc-text">还是要从使用看起</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#最简单的一个小例子"><span class="toc-number">2.1.</span> <span class="toc-text">最简单的一个小例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在一个线程里面的话"><span class="toc-number">2.2.</span> <span class="toc-text">在一个线程里面的话</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#subscribeOn"><span class="toc-number">2.3.</span> <span class="toc-text">subscribeOn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ObserveOn"><span class="toc-number">2.4.</span> <span class="toc-text">ObserveOn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SubscribeOn-与-OnserveOn"><span class="toc-number">2.5.</span> <span class="toc-text">SubscribeOn 与 OnserveOn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结果"><span class="toc-number">2.6.</span> <span class="toc-text">结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简写"><span class="toc-number">2.7.</span> <span class="toc-text">简写</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+<div id="authorInfo">
+	
+		<div class="author-logo"></div>		
+	
+	<div class="social-list" class="clearfix">
+		
+		
+		
+		<a href="https://github.com/CSnowStack" target="_blank" title="github"></a>
+		
+		
+		
+	</div>
+</div>
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/Dagger2/" title="Dagger2">Dagger2<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Rxjava/" title="Rxjava">Rxjava<sup>3</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+      <li><a href="http://gengbiao.me" target="_blank" title="coney">coney's Blog</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Dagger2/" style="font-size: 10px;">Dagger2</a> <a href="/tags/Rxjava/" style="font-size: 20px;">Rxjava</a>
+    </div>
+  </div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+    
+            <p class="copyright"> © 2016 
+		
+		<a href="csnowstack.github.io" target="_blank" title="Qian Cheng">Qian Cheng</a>
+		
+            && Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> && Theme by <a href="http://gengbiao.me" target="_blank" title="coney">coney</a>
+            </div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"csnowstack"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+<script>
+    
+        var _bdImg = '4';
+    
+    window._bd_share_config={
+        "common":{
+            "bdSnsKey":{
+
+            },
+            "bdText":"",
+            "bdMini":"2",
+            "bdMiniList":[
+                "qzone",
+                "tsina",
+                "weixin",
+                "renren",
+                "tqq",
+                "tieba",
+                "douban",
+                "sqq",
+                "diandian",
+                "huaban",
+                "youdao",
+                "mail",
+                "ty",
+                "fbook",
+                "twi",
+                "linkedin",
+                "copy",
+                "print"
+            ],
+            "bdPic":"",
+            "bdStyle":"0",
+            "bdSize":"16"
+        },
+        "slide":{
+            "type":"slide",
+            "bdImg":_bdImg,
+            "bdPos":"right",
+            "bdTop":"350"
+        },
+        "image":{
+            "viewList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ],
+            "viewText":"分享：",
+            "viewSize":"16"
+        },
+        "selectShare":{
+            "bdContainerClass":null,
+            "bdSelectMiniList":[
+                "weixin",
+                "qzone",
+                "tsina",
+                "renren",
+                "douban",
+                "tqq"
+            ]
+        }
+    };
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-79425321-1', 'http://csnowstack.github.io/');  
+ga('send', 'pageview');
+</script>
+
+
+  </body>
+</html>
+
