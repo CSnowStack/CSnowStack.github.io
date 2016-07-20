@@ -90,7 +90,7 @@
 <meta property="og:url" content="csnowstack.github.io/2016/07/03/Rxjava之线程的切换/index.html">
 <meta property="og:site_name" content="Go with the flow">
 <meta property="og:description">
-<meta property="og:updated_time" content="2016-07-11T09:12:29.394Z">
+<meta property="og:updated_time" content="2016-07-20T03:12:46.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rxjava之线程的切换">
 <meta name="twitter:description">
@@ -105,8 +105,8 @@
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: 0,
-      author: '博主'
+      userId: 6293460732486878000,
+      author: '楼主'
     }
   };
 </script>
@@ -198,16 +198,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
             
@@ -234,16 +224,6 @@
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
           </a>
         </li>
       
@@ -391,6 +371,18 @@
 <p>保存了传进来的<code>Scheduler</code>类,当下面的数据调用当前逻辑产生的<code>Observable</code>时,会调用<code>OperatorSubscribeOn</code>里的<code>call</code>方法.传进来的<code>Subcriber</code>则是我们实现具体逻辑的<code>Subsciner</code>,</p>
 </blockquote>
 <p><code>Schedulers</code>类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line">* 生产调度器的静态工厂类</span><br><span class="line">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Schedulers</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Scheduler computionScheduler;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Scheduler ioScheduler;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Scheduler newThreadScheduler;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Schedulers INSTANCE =<span class="keyword">new</span> Schedulers();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Schedulers</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Scheduler c=RxJavaPlugins.getInstance().getScheduleersHook().getComputionScheduler();</span><br><span class="line">    <span class="keyword">if</span>(c!=<span class="keyword">null</span>)&#123;</span><br><span class="line">      computionScheduler=c;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">      computionScheduler=<span class="keyword">new</span> EventLoopsScheduler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Scheduler io = RxJavaPlugins.getInstance().getSchedulersHook().getIOScheduler();</span><br><span class="line">    <span class="keyword">if</span> (io != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ioScheduler = io;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ioScheduler = <span class="keyword">new</span> CachedThreadScheduler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Scheduler nt = RxJavaPlugins.getInstance().getSchedulersHook().getNewThreadScheduler();</span><br><span class="line">    <span class="keyword">if</span> (nt != <span class="keyword">null</span>) &#123;</span><br><span class="line">       newThreadScheduler = nt;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       newThreadScheduler = NewThreadScheduler.instance();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Scheduler <span class="title">newThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> INSTANCE.newThreadScheduler;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Scheduler <span class="title">io</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> INSTANCE.ioScheduler;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>newThread</code> 方法,调用<code>Schedulers</code>的单例生成<code>NewThreadScheduler</code>的实例</p>
+</blockquote>
+<p><code>NewThreadScheduler</code>类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NewThreadScheduler</span> <span class="keyword">extends</span> <span class="title">Scheduler</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String THEAD_NAME_PREFIX=<span class="string">"RxNewThreadScheduler-1"</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> RxThreadFactory THEAD_FACTORY=<span class="keyword">new</span> RxThreadFactory(THREAD_NAME_PREFIX);</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> NewThreadScheduler INSTANCE=<span class="keyword">new</span> NewThreadScheduler();</span><br><span class="line">  <span class="comment">/* package */</span><span class="function"><span class="keyword">static</span> NewThreadScheduler <span class="title">instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   <span class="keyword">return</span> INSTANCE;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">NewThreadScheduler</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Worker <span class="title">createWorker</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> <span class="keyword">new</span> NewThreadWorker(THREAD_FACTORY)&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面的<code>Scheduler.createWorker()</code>调用的便是这里的<code>createWorker</code></p>
+</blockquote>
+<p><code>RxThreadFactory</code>类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">RxThreadFactory</span> <span class="keyword">extends</span> <span class="title">AtomicLong</span> <span class="keyword">implements</span> <span class="title">ThreadFactory</span></span>&#123;</span><br><span class="line">  <span class="keyword">final</span> String prefix;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">RxThreadFactory</span><span class="params">(String prefix)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.prefix=<span class="keyword">private</span> ;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span></span>&#123;</span><br><span class="line">    Thread t=<span class="keyword">new</span> Thread(r,prefix+incrementAndGet());</span><br><span class="line">    t.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>继承自<code>AtomicLong</code>保证线程安全,实现了<code>ThreadFactory</code>创建新线程,在这里生成的线程名</p>
+</blockquote>
+<p><code>NewThreadWorker</code>类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NewThreadWorker</span> <span class="keyword">extends</span> <span class="title">Scheduler</span>.<span class="title">Worker</span> <span class="keyword">implements</span> <span class="title">Subscription</span></span>&#123;</span><br><span class="line">  <span class="comment">/* package */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">NewThreadWorker</span><span class="params">(ThreadFactory ThreadFactory)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><code>Scheduler</code>抽象类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Scheduler</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Worker <span class="title">createWorker</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Worker</span> <span class="keyword">implements</span> <span class="title">Subscription</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Subscription <span class="title">schedule</span><span class="params">(Action0 action)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Subscription <span class="title">schedule</span><span class="params">(<span class="keyword">final</span> Action0 action, <span class="keyword">final</span> <span class="keyword">long</span> delayTime, <span class="keyword">final</span> TimeUnit unit)</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">now</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">now</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> System.currentTimeMillis();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><code>ScalarSynchronousObservable</code>类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ScalarSynchronousObservable</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">Observable</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> &lt;T&gt; <span class="function">ScalarSynchronousObservable&lt;T&gt; <span class="title">create</span><span class="params">(T t)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ScalarSynchronousObservable&lt;T&gt;(t);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> T t;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="title">ScalarSynchronousObservable</span><span class="params">(<span class="keyword">final</span> T t)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>&lt;<span class="keyword">new</span> OnSubscribe&lt;T&gt;()&gt;&#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(Subscriber&lt;? <span class="keyword">super</span> T&gt; s)</span></span>&#123;</span><br><span class="line">        s.onNext(t);</span><br><span class="line">        s.onCompleted();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span></span>&#123;<span class="keyword">return</span> t;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Observable&lt;T&gt; <span class="title">scalarScheduleOn</span><span class="params">(Scheduler scheduler)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(scheduler <span class="keyword">instanceof</span> EventLoopsScheduler)&#123;</span><br><span class="line">      EventLoopsScheduler es =(EventLoopsScheduler) scheduler;</span><br><span class="line">      <span class="keyword">return</span> create(<span class="keyword">new</span> DirectScheduledEmission&lt;T&gt;(es,t));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> create(<span class="keyword">new</span> NormalScheduledEmission&lt;T&gt;(scheduler,t));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>参考<br><a href="https://mcxiaoke.gitbooks.io/rxdocs/content/" target="_blank" rel="external">Rxjava 中文文档</a><br><a href="http://www.jianshu.com/p/f3f0eccbcd6f" target="_blank" rel="external">youkey Rxjava 简洁封装之道</a><br><a href="http://www.jianshu.com/p/e9e03194199e" target="_blank" rel="external">小鄧子 避免打断链式结构：使用.compose( )操作符</a></p>
@@ -447,34 +439,23 @@
     <div class="post-spread">
       
         
-  <div class="bdsharebuttonbox">
-    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
-    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
-    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
-    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
-    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
-    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
-    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
-    <a href="#" class="bds_more" data-cmd="more"></a>
-    <a class="bds_count" data-cmd="count"></a>
-  </div>
   <script>
     window._bd_share_config = {
       "common": {
         "bdText": "",
-        "bdMini": "2",
+        "bdMini": "1",
         "bdMiniList": false,
         "bdPic": ""
-      },
-      "share": {
-        "bdSize": "16",
-        "bdStyle": "0"
       },
       "image": {
         "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
         "viewText": "分享到：",
         "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
       }
     }
   </script>
@@ -562,6 +543,17 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CSnowStack" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
           
         </div>
 
