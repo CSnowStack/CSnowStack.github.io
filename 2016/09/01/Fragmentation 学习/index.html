@@ -84,15 +84,34 @@
 
 
 
-<meta name="description" content="CSnowStack的个人博客">
-<meta property="og:type" content="website">
+<meta name="description" content="[Fragmentation] (https://github.com/YoKeyword/Fragmentation)
+当前版本 0.7.10
+
+最基本的接口ISupport以及ISupportFragment
+github 里有详细的注释不在这里介绍
+
+SupportActivity,从最基本的使用开始1loadRootFragment(R.id.fl_container, HomeFragm">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Go with the flow">
-<meta property="og:url" content="csnowstack.github.io/index.html">
+<meta property="og:url" content="csnowstack.github.io/2016/09/01/Fragmentation 学习/index.html">
 <meta property="og:site_name" content="Go with the flow">
-<meta property="og:description" content="CSnowStack的个人博客">
+<meta property="og:description" content="[Fragmentation] (https://github.com/YoKeyword/Fragmentation)
+当前版本 0.7.10
+
+最基本的接口ISupport以及ISupportFragment
+github 里有详细的注释不在这里介绍
+
+SupportActivity,从最基本的使用开始1loadRootFragment(R.id.fl_container, HomeFragm">
+<meta property="og:updated_time" content="2016-09-03T12:44:06.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go with the flow">
-<meta name="twitter:description" content="CSnowStack的个人博客">
+<meta name="twitter:description" content="[Fragmentation] (https://github.com/YoKeyword/Fragmentation)
+当前版本 0.7.10
+
+最基本的接口ISupport以及ISupportFragment
+github 里有详细的注释不在这里介绍
+
+SupportActivity,从最基本的使用开始1loadRootFragment(R.id.fl_container, HomeFragm">
 
 
 
@@ -113,9 +132,9 @@
 
 
 
-  <link rel="canonical" href="csnowstack.github.io/"/>
+  <link rel="canonical" href="csnowstack.github.io/2016/09/01/Fragmentation 学习/"/>
 
-  <title> Go with the flow </title>
+  <title>  | Go with the flow </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -155,9 +174,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,9 +261,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -267,9 +284,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/09/01/Fragmentation 学习/" itemprop="url">
-                  未命名
-                </a>
               
             
           </h1>
@@ -316,9 +330,7 @@
       
 
       
-        
-          
-            <h2 id="Fragmentation-https-github-com-YoKeyword-Fragmentation"><a href="#Fragmentation-https-github-com-YoKeyword-Fragmentation" class="headerlink" title="[Fragmentation] (https://github.com/YoKeyword/Fragmentation)"></a>[Fragmentation] (<a href="https://github.com/YoKeyword/Fragmentation" target="_blank" rel="external">https://github.com/YoKeyword/Fragmentation</a>)</h2><blockquote>
+        <h2 id="Fragmentation-https-github-com-YoKeyword-Fragmentation"><a href="#Fragmentation-https-github-com-YoKeyword-Fragmentation" class="headerlink" title="[Fragmentation] (https://github.com/YoKeyword/Fragmentation)"></a>[Fragmentation] (<a href="https://github.com/YoKeyword/Fragmentation" target="_blank" rel="external">https://github.com/YoKeyword/Fragmentation</a>)</h2><blockquote>
 <p>当前版本 0.7.10</p>
 </blockquote>
 <h3 id="最基本的接口ISupport以及ISupportFragment"><a href="#最基本的接口ISupport以及ISupportFragment" class="headerlink" title="最基本的接口ISupport以及ISupportFragment"></a>最基本的接口<code>ISupport</code>以及<code>ISupportFragment</code></h3><blockquote>
@@ -354,16 +366,20 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// handleBack 完整版</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleBack</span><span class="params">(<span class="keyword">final</span> FragmentManager fragmentManager, <span class="keyword">boolean</span> fromStartWithPop)</span> </span>&#123;</span><br><span class="line">    List&lt;Fragment&gt; fragmentList = fragmentManager.getFragments();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    FragmentResultRecord fragmentResultRecord = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">long</span> lastAnimTime = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = fragmentList.size() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        Fragment fragment = fragmentList.get(i);</span><br><span class="line">        <span class="keyword">if</span> (fragment <span class="keyword">instanceof</span> SupportFragment) &#123;</span><br><span class="line">            <span class="keyword">final</span> SupportFragment supportFragment = (SupportFragment) fragment;</span><br><span class="line">            <span class="keyword">if</span> (!flag) &#123;</span><br><span class="line">                Bundle args = supportFragment.getArguments();</span><br><span class="line">                <span class="comment">//判断是否来自 startForResult</span></span><br><span class="line">                <span class="keyword">if</span> (args == <span class="keyword">null</span> || !args.containsKey(ARG_RESULT_RECORD)) <span class="keyword">break</span>;</span><br><span class="line">                fragmentResultRecord = args.getParcelable(ARG_RESULT_RECORD);</span><br><span class="line">                <span class="keyword">if</span> (fragmentResultRecord == <span class="keyword">null</span>) <span class="keyword">break</span>;</span><br><span class="line">                <span class="comment">//toFragment 的关闭动画的时间</span></span><br><span class="line">                lastAnimTime = supportFragment.getExitAnimDuration();</span><br><span class="line">                flag = <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">final</span> FragmentResultRecord finalFragmentResultRecord = fragmentResultRecord;</span><br><span class="line">                <span class="keyword">long</span> animTime = supportFragment.getPopEnterAnimDuration();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (fromStartWithPop) &#123;</span><br><span class="line">                    fragmentManager.popBackStack();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    fragmentManager.popBackStackImmediate();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                mHandler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                        supportFragment.onFragmentResult(finalFragmentResultRecord.requestCode, finalFragmentResultRecord.resultCode, finalFragmentResultRecord.resultBundle);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;, Math.max(animTime, lastAnimTime) + BUFFER_TIME_FOR_RESULT);</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (fromStartWithPop) &#123;</span><br><span class="line">        fragmentManager.popBackStack();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        fragmentManager.popBackStackImmediate();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>获取了<code>fragmentManager</code>里的所有<code>Fragment</code>,增加一个标识,一个<code>FragmentResultRecord</code>实体类,一个记录<code>toFragment</code>的关闭动画的时间.然后开始循环,在<code>!flag</code>里判断是否赖在<code>startForResult</code>,并对<code>lastAnimTime</code>进行赋值,设置<code>flag</code>为<code>true</code>,之后就会进入下面的判断,获取当前<code>fromFragment</code>的进入动画的时间,如果来自<code>fromStartWithPop</code>,也就是当前<code>Fragment</code>是由<code>startForResult</code>进入的或设置了<code>setFramgentResult</code>,然后调用了<code>startWithPop</code>的传值的问题,然后调用<code>postDelayed</code>把<code>onFragment</code>的操作加入队列,<code>mHandler</code>是在主线程里创建的,<code>looper</code>循环消息的时候就是在主线程了执行的</p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
@@ -371,534 +387,59 @@
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/07/03/Rxjava之线程的切换/" rel="next" title="Rxjava之线程的切换">
+                <i class="fa fa-chevron-left"></i> Rxjava之线程的切换
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2016/07/03/Rxjava之线程的切换/" itemprop="url">
-                  Rxjava之线程的切换
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-07-03T10:32:33+08:00" content="2016-07-03">
-              2016-07-03
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/07/03/Rxjava之线程的切换/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/03/Rxjava之线程的切换/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p><Excerpt in index | 首页摘要><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/07/03/Rxjava之线程的切换/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/30/Rxjava操作符之由map到lift/" itemprop="url">
-                  Rxjava操作符之由map到lift
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-30T19:08:36+08:00" content="2016-06-30">
-              2016-06-30
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/30/Rxjava操作符之由map到lift/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/30/Rxjava操作符之由map到lift/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
+    <div class="post-spread">
       
         
-          <p><Excerpt in index | 首页摘要><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/30/Rxjava操作符之由map到lift/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/26/Rxjava简单的流程分析/" itemprop="url">
-                  Rxjava简单的流程分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-26T13:57:26+08:00" content="2016-06-26">
-              2016-06-26
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/26/Rxjava简单的流程分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/26/Rxjava简单的流程分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><Excerpt in index | 首页摘要><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/26/Rxjava简单的流程分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/12/Dagger2之Scope/" itemprop="url">
-                  Dagger2之Scope
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-12T22:02:56+08:00" content="2016-06-12">
-              2016-06-12
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/12/Dagger2之Scope/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/12/Dagger2之Scope/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><Excerpt in index | 首页摘要><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/12/Dagger2之Scope/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/07/初识Dagger2/" itemprop="url">
-                  初识Dagger2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-07T23:07:53+08:00" content="2016-06-07">
-              2016-06-07
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/06/07/初识Dagger2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/07/初识Dagger2/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><Excerpt in index | 首页摘要><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/07/初识Dagger2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -906,6 +447,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/01/Fragmentation 学习/"
+           data-title="" data-url="csnowstack.github.io/2016/09/01/Fragmentation 学习/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -925,8 +474,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/coney.png"
@@ -980,6 +538,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragmentation-https-github-com-YoKeyword-Fragmentation"><span class="nav-number">1.</span> <span class="nav-text">[Fragmentation] (https://github.com/YoKeyword/Fragmentation)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最基本的接口ISupport以及ISupportFragment"><span class="nav-number">1.1.</span> <span class="nav-text">最基本的接口ISupport以及ISupportFragment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SupportActivity-从最基本的使用开始"><span class="nav-number">1.2.</span> <span class="nav-text">SupportActivity,从最基本的使用开始</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startWithPop"><span class="nav-number">1.3.</span> <span class="nav-text">startWithPop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startForResult"><span class="nav-number">1.4.</span> <span class="nav-text">startForResult</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -1083,6 +652,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
