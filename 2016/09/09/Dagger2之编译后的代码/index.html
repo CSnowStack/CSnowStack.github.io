@@ -1,0 +1,714 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Dagger2," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/coney.svg?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="新建一个类MeiZi1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465public class MeiZi &amp;#123;    public String name;    public int age;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dagger2之编译后的代码">
+<meta property="og:url" content="csnowstack.github.io/2016/09/09/Dagger2之编译后的代码/index.html">
+<meta property="og:site_name" content="Go with the flow">
+<meta property="og:description" content="新建一个类MeiZi1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465public class MeiZi &amp;#123;    public String name;    public int age;">
+<meta property="og:updated_time" content="2016-09-14T08:05:24.862Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dagger2之编译后的代码">
+<meta name="twitter:description" content="新建一个类MeiZi1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465public class MeiZi &amp;#123;    public String name;    public int age;">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6293460732486878000,
+      author: '楼主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="csnowstack.github.io/2016/09/09/Dagger2之编译后的代码/"/>
+
+  <title> Dagger2之编译后的代码 | Go with the flow </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-79425321-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?fbdd2f1bb17f85e0380f99a2f56e520a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Go with the flow</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">CSnowStack</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Dagger2之编译后的代码
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-09T15:42:38+08:00" content="2016-09-09">
+              2016-09-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/09/Dagger2之编译后的代码/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/09/Dagger2之编译后的代码/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <excerpt in="" index="" |="" 首页摘要="">
+
+<h3 id="新建一个类MeiZi"><a href="#新建一个类MeiZi" class="headerlink" title="新建一个类MeiZi"></a>新建一个类<code>MeiZi</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MeiZi</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> beautiful;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MeiZi</span><span class="params">(<span class="keyword">int</span> age, <span class="keyword">boolean</span> beautiful, String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">        <span class="keyword">this</span>.beautiful = beautiful;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MeiZhiModule</span></span><br><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MeiZhiModule</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="function">String <span class="title">providerName</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"妹纸"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="function">Boolean <span class="title">providerBeautiful</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">providerAge</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="number">20</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MeiZhiComponent</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Component</span>(modules = MeiZhiModule.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MeiZhiComponent</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">inject</span><span class="params">(MainActivity activity)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MainActivity</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    String mName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    Boolean mBeautiful;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    <span class="keyword">int</span> mAge;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Inject</span></span><br><span class="line">    MeiZhi mMeiZi;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        Log.e(<span class="string">"--&gt;&gt;"</span>,<span class="string">"名为 "</span>+mMeiZi.name+<span class="string">"的妹纸"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>都写好之后 <code>Rebuild</code> 一下,会自动生成<code>DaggerMeiZhiComponent</code>,然后在<code>MainActivity</code>的<code>onCreate</code>方法里面添加代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DaggerMeiZhiComponent.builder().meiZhiModule(<span class="keyword">new</span> MeiZhiModule()).build().inject(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然后就会打印出来</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">demo.cq.dagger2demo E/--&gt;&gt;: 名为 妹纸的妹纸</span><br></pre></td></tr></table></figure>
+<h3 id="当然-我们还可以换种构造妹纸的方式-再注入一个妹纸进来"><a href="#当然-我们还可以换种构造妹纸的方式-再注入一个妹纸进来" class="headerlink" title="当然,我们还可以换种构造妹纸的方式,再注入一个妹纸进来"></a>当然,我们还可以换种构造妹纸的方式,再注入一个妹纸进来</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MeiZhiModule</span></span><br><span class="line"> <span class="meta">@Provides</span></span><br><span class="line"> <span class="meta">@Singleton</span></span><br><span class="line"> <span class="function">MeiZhi <span class="title">providerMeiZhi</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi(<span class="number">21</span>,<span class="keyword">true</span>,<span class="string">"妹纸0号"</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>然后再编译,就会打印</p>
+<blockquote>
+<p>demo.cq.dagger2demo E/–&gt;&gt;: 名为 妹纸0号的妹纸</p>
+<p>事实证明<code>Module</code>provider的方式的优先级<code>Inject</code>构造方法的方式–之前好像有讲</p>
+</blockquote>
+<h3 id="妹纸1号"><a href="#妹纸1号" class="headerlink" title="妹纸1号"></a>妹纸1号</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Provides</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="function">MeiZhi <span class="title">providerMeiZhiOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi(<span class="number">21</span>,<span class="keyword">true</span>,<span class="string">"妹纸1号"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后<code>Rebuild</code>你就会发现报错了–这是当然的,还是需要加<code>@Named</code></p>
+<blockquote>
+<p>错误: demo.cq.dagger2demo.MeiZhi is bound multiple times:<br>@Provides @Singleton demo.cq.dagger2demo.MeiZhi demo.cq.dagger2demo.MeiZhiModule.providerMeiZhi()<br>@Provides @Singleton demo.cq.dagger2demo.MeiZhi demo.cq.dagger2demo.MeiZhiModule.providerMeiZhiOne()</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Provides</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Named</span>(<span class="string">"Zero"</span>)</span><br><span class="line"><span class="function">MeiZhi <span class="title">providerMeiZhi</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi(<span class="number">21</span>,<span class="keyword">true</span>,<span class="string">"妹纸0号"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Provides</span></span><br><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Named</span>(<span class="string">"One"</span>)</span><br><span class="line"><span class="function">MeiZhi <span class="title">providerMeiZhiOne</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi(<span class="number">21</span>,<span class="keyword">true</span>,<span class="string">"妹纸1号"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MainActivity</span></span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="meta">@Named</span>(<span class="string">"Zero"</span>)</span><br><span class="line">MeiZhi mMeiZi;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>当然打印了 E/–&gt;&gt;: 名为 妹纸0号的妹纸</p>
+</blockquote>
+<h3 id="妹纸新建够了-该看妹纸是怎么建出来的了"><a href="#妹纸新建够了-该看妹纸是怎么建出来的了" class="headerlink" title="妹纸新建够了,该看妹纸是怎么建出来的了"></a>妹纸新建够了,该看妹纸是怎么建出来的了</h3><h4 id="Inject注解"><a href="#Inject注解" class="headerlink" title="@Inject注解"></a><code>@Inject</code>注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Taqrget</span>((METHOD,CONSTRUCTOR,FIELD))</span><br><span class="line"><span class="meta">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Inject&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://droidyue.com/blog/2016/04/24/look-into-java-annotation/" target="_blank" rel="external">技术小黑屋 详解Java中的注解</a><br><a href="http://droidyue.com/blog/2016/08/14/android-annnotation/" target="_blank" rel="external">技术小黑屋 探究Android中的注解</a><br><a href="http://www.open-open.com/lib/view/open1462925582182.html" target="_blank" rel="external">Android apt代码生成之实践入门</a></p>
+<blockquote>
+<p>自己看</p>
+</blockquote>
+<h3 id="根据模板生成的代码"><a href="#根据模板生成的代码" class="headerlink" title="根据模板生成的代码"></a>根据模板生成的代码</h3><blockquote>
+<p>注 : 只保留了<code>@Inject</code>在构造方法上的注解,别的先去去掉了</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MeiZhi类</span></span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MeiZhi</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=<span class="string">"无参"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//MianAcitivty</span></span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line">MeiZhi mMeiZi;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.activity_main);</span><br><span class="line">    Log.e(<span class="string">"--&gt;&gt;"</span>,<span class="string">"名为 "</span>+mMeiZi.name+<span class="string">"的妹纸"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>然后,你就会发现报错了,因为没东西来给他注入进去</p>
+</blockquote>
+<p>下面添加注入的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Singleton</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MeiZhiComponent</span> </span>&#123;</span><br><span class="line">  <span class="function">MeiZhi <span class="title">providerMeiZhi</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">inject</span><span class="params">(MainActivity activity)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MainActivity 里完成注入</span></span><br><span class="line">DaggerMeiZhiComponent.builder().build().inject(<span class="keyword">this</span>);</span><br></pre></td></tr></table></figure></p>
+<p>下面看自动生成的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MeiZhi_Factory</span></span><br><span class="line"><span class="meta">@Generated</span>(<span class="string">"dagger.internal.codegen.ComponentProcessor"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> MeiZhi_Factory implements Factory&lt;MeiZhi&gt; &#123;</span><br><span class="line">INSTANCE;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> MeiZhi <span class="title">get</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Factory&lt;MeiZhi&gt; <span class="title">create</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> INSTANCE;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MainActivity_MembersInjector</span></span><br><span class="line"><span class="meta">@Generated</span>(<span class="string">"dagger.internal.codegen.ComponentProcessor"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity_MembersInjector</span> <span class="keyword">implements</span> <span class="title">MembersInjector</span>&lt;<span class="title">MainActivity</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> MembersInjector&lt;AppCompatActivity&gt; supertypeInjector;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> Provider&lt;MeiZhi&gt; mMeiZiProvider;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">MainActivity_MembersInjector</span><span class="params">(MembersInjector&lt;AppCompatActivity&gt; supertypeInjector, Provider&lt;MeiZhi&gt; mMeiZiProvider)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">assert</span> supertypeInjector != <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.supertypeInjector = supertypeInjector;</span><br><span class="line">    <span class="keyword">assert</span> mMeiZiProvider != <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.mMeiZiProvider = mMeiZiProvider;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">injectMembers</span><span class="params">(MainActivity instance)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"Cannot inject members into a null reference"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    supertypeInjector.injectMembers(instance);</span><br><span class="line">    instance.mMeiZi = mMeiZiProvider.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MembersInjector&lt;MainActivity&gt; <span class="title">create</span><span class="params">(MembersInjector&lt;AppCompatActivity&gt; supertypeInjector, Provider&lt;MeiZhi&gt; mMeiZiProvider)</span> </span>&#123;  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> MainActivity_MembersInjector(supertypeInjector, mMeiZiProvider);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//DaggerMeiZhiComponent</span></span><br><span class="line"><span class="meta">@Generated</span>(<span class="string">"dagger.internal.codegen.ComponentProcessor"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">DaggerMeiZhiComponent</span> <span class="keyword">implements</span> <span class="title">MeiZhiComponent</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> MembersInjector&lt;MainActivity&gt; mainActivityMembersInjector;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">DaggerMeiZhiComponent</span><span class="params">(Builder builder)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">assert</span> builder != <span class="keyword">null</span>;</span><br><span class="line">    initialize(builder);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Builder <span class="title">builder</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Builder();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> MeiZhiComponent <span class="title">create</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> builder().build();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">final</span> Builder builder)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>.mainActivityMembersInjector = MainActivity_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), MeiZhi_Factory.create());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> MeiZhi <span class="title">providerMeiZhi</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> MeiZhi_Factory.create().get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">inject</span><span class="params">(MainActivity activity)</span> </span>&#123;  </span><br><span class="line">    mainActivityMembersInjector.injectMembers(activity);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MeiZhiComponent <span class="title">build</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> DaggerMeiZhiComponent(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>代码很简单明确,不需要做过多解释,首先是生成了枚举类<code>MeiZhi_Factory</code>,注册器<code>MainActivity_MembersInjector</code>,组件<code>MainActivity_MembersInjector</code>,然后调用<code>builder()</code>方法新建一个内部类<code>Builder</code>,然后调用<code>Builder</code>的<code>build</code>方法返回一个<code>DaggerMeiZhiComponent</code>实例,然后走<code>DaggerMeiZhiComponent</code>的构造方法,然后调用<code>initialize</code>方法,完成<code>MainActivity_MembersInjector</code>的实例化,传入了<code>MeiZhi_Factory</code>实例来提供<code>MeiZhi</code></p>
+</blockquote>
+<p>使用有参的话就需要自己传入<code>Module</code>了<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">DaggerMeiZhiComponent.builder().meiZhiModule(<span class="keyword">new</span> MeiZhiModule(<span class="string">"str"</span>)).build().inject(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//DaggerMeiZhiComponent</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> MeiZhiModule meiZhiModule;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> MeiZhiComponent <span class="title">build</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (meiZhiModule == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"meiZhiModule must be set"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DaggerMeiZhiComponent(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Builder <span class="title">meiZhiModule</span><span class="params">(MeiZhiModule meiZhiModule)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (meiZhiModule == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"meiZhiModule"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.meiZhiModule = meiZhiModule;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>@Named</code>限制注解的使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MainActivity</span></span><br><span class="line"><span class="meta">@Inject</span></span><br><span class="line"><span class="meta">@Named</span>(<span class="string">"Beautiful"</span>)</span><br><span class="line">MeiZhi mMeiZi;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MeiZhi</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MeiZhi</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name=name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MeiZhiModule</span></span><br><span class="line"><span class="meta">@Module</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MeiZhiModule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MeiZhiModule</span><span class="params">(String parameter)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">"Normal"</span>)</span><br><span class="line">    <span class="function">MeiZhi <span class="title">providerMeiZhi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi(<span class="string">"一般"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Provides</span></span><br><span class="line">    <span class="meta">@Singleton</span></span><br><span class="line">    <span class="meta">@Named</span>(<span class="string">"Beautiful"</span>)</span><br><span class="line">    <span class="function">MeiZhi <span class="title">providerBeautifulMeiZhi</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> MeiZhi(<span class="string">"漂亮"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>生成了连个用于生成<code>MeiZhi</code>的Factory</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DaggerMeiZhiComponent</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> MeiZhiModule meiZhiModule;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> MeiZhiComponent <span class="title">build</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (meiZhiModule == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"meiZhiModule must be set"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DaggerMeiZhiComponent(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Builder <span class="title">meiZhiModule</span><span class="params">(MeiZhiModule meiZhiModule)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">if</span> (meiZhiModule == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"meiZhiModule"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.meiZhiModule = meiZhiModule;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">(<span class="keyword">final</span> Builder builder)</span> </span>&#123;  </span><br><span class="line">  <span class="keyword">this</span>.providerBeautifulMeiZhiProvider = ScopedProvider.create(MeiZhiModule_ProviderBeautifulMeiZhiFactory.create(builder.meiZhiModule));</span><br><span class="line">  <span class="keyword">this</span>.mainActivityMembersInjector = MainActivity_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), providerBeautifulMeiZhiProvider);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到使用的是提供漂亮妹纸的Factory</p>
+</blockquote>
+</excerpt>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Dagger2/" rel="tag">#Dagger2</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/04/Fragmentation学习/" rel="next" title="Fragmentation学习">
+                <i class="fa fa-chevron-left"></i> Fragmentation学习
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/10/Android 源码设计模式解析与实战学习/" rel="prev" title="Android源码设计模式学习">
+                Android源码设计模式学习 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/09/Dagger2之编译后的代码/"
+           data-title="Dagger2之编译后的代码" data-url="csnowstack.github.io/2016/09/09/Dagger2之编译后的代码/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/coney.png"
+               alt="Qian Cheng" />
+          <p class="site-author-name" itemprop="name">Qian Cheng</p>
+          <p class="site-description motion-element" itemprop="description">CSnowStack的个人博客</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/CSnowStack" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建一个类MeiZi"><span class="nav-number">1.</span> <span class="nav-text">新建一个类MeiZi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#当然-我们还可以换种构造妹纸的方式-再注入一个妹纸进来"><span class="nav-number">2.</span> <span class="nav-text">当然,我们还可以换种构造妹纸的方式,再注入一个妹纸进来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#妹纸1号"><span class="nav-number">3.</span> <span class="nav-text">妹纸1号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#妹纸新建够了-该看妹纸是怎么建出来的了"><span class="nav-number">4.</span> <span class="nav-text">妹纸新建够了,该看妹纸是怎么建出来的了</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Inject注解"><span class="nav-number">4.1.</span> <span class="nav-text">@Inject注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据模板生成的代码"><span class="nav-number">5.</span> <span class="nav-text">根据模板生成的代码</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qian Cheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"csnowstack"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
